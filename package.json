@@ -4,7 +4,8 @@
   "description": "nodejs 와 몽고DB를 공부하는 공간 입니다",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/mun-jeong-min/nodejs-Mongo-DB/issues"
   },
-  "homepage": "https://github.com/mun-jeong-min/nodejs-Mongo-DB#readme"
+  "homepage": "https://github.com/mun-jeong-min/nodejs-Mongo-DB#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
 }
