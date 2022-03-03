@@ -1,0 +1,19 @@
+{
+  "name": "nodejs-mongo-db",
+  "version": "1.0.0",
+  "description": "nodejs 와 몽고DB를 공부하는 공간 입니다",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mun-jeong-min/nodejs-Mongo-DB.git"
+  },
+  "author": "mun-jeong-min",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mun-jeong-min/nodejs-Mongo-DB/issues"
+  },
+  "homepage": "https://github.com/mun-jeong-min/nodejs-Mongo-DB#readme"
+}
