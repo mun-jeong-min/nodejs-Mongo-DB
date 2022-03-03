@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/mun-jeong-min/nodejs-Mongo-DB#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.2",
     "express": "^4.17.3"
   }
 }
