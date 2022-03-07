@@ -37,7 +37,7 @@ userSchema.pre('save', function(next) {
     const user = this
 
     if(user.isModified('password')) {
-
+        
         bcrypt.genSalt(saltRounds, function(err, salt) {
             if(err) return next(err);
     
@@ -47,6 +47,8 @@ userSchema.pre('save', function(next) {
                 next()
              })
         })
+    } else {
+        next();
     }
 
 })

@@ -32,4 +32,8 @@ app.post('/registar', async(req,res) => {
   })
 })
 
+app.post('/login', async(req,res) => {
+  User.findOne({ email: req.body.email })
+})
+
 app.listen(port, () => console.log('port 3000 run start'));   
