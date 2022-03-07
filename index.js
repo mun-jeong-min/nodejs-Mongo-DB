@@ -46,8 +46,8 @@ app.post('/login', async(req,res) => {
         return res.json({ loginSuccess:false, message: "비밀번호가 틀렸습니다." })
       }
     }) 
+    return res.json({ loginSuccess:true, message: "로그인 성공" })
   })
-  
 })
 
 app.listen(port, () => console.log('port 3000 run start'));   
