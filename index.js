@@ -3,12 +3,13 @@ const app = express();
 const port = 3000;
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const { User } = require('./models/User')
+const { User } = require('./models/User');
+const { mongoURL } = require('./config/dev');
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 
-mongoose.connect('mongodb+srv://moon:abcde12345@boilerplate.fje28.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(mongoURL, {
     //useNewUrlParser: true,
     //useUnifiedTopology: true,
     //useCreateIndex: true,           
@@ -31,4 +32,4 @@ app.post('/registar', async(req,res) => {
   })
 })
 
-app.listen(port, () => console.log('port 3000 run start')); 
+app.listen(port, () => console.log('port 3000 run start'));   
