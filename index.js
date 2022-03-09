@@ -4,12 +4,13 @@ const port = 3000;
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const { User } = require('./models/User');
-const { mongoURL } = require('./config/dev');
+const dotenv = require('dotenv');
+dotenv.config();
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 
-mongoose.connect(mongoURL, {
+mongoose.connect(process.env.mongoURL, {
     //useNewUrlParser: true,
     //useUnifiedTopology: true,
     //useCreateIndex: true,           
