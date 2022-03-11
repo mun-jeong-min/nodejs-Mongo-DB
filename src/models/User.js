@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -35,7 +36,7 @@ const userSchema = mongoose.Schema({
 })
 
 userSchema.pre('save', function(next) {
-    const user = this
+    const user = this;
 
     if(user.isModified('password')) {
         bcrypt.genSalt(process.env.saltRounds, function(err, salt) {
@@ -54,7 +55,18 @@ userSchema.pre('save', function(next) {
 userSchema.methods.comparePassword = function(plainPassword, cb) {
     bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
         if(err) return cb(err),
-        cb(null,isMatch)
+        cb(null, isMatch)
+    })
+}
+
+userSchema.methods.generateToken = function(cb) {
+    const user = this;
+    const token = jwt.sign(user._id, process.env.JWT_SECRET)
+
+    user.token = token;
+    user.save(function(err, user) {
+        if(err) return cb(err)
+        cb(null, user)
     })
 }
 

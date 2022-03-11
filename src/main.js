@@ -22,7 +22,7 @@ mongoose.connect(process.env.mongoURL, {
     res.send('start');
 })
 
-app.post('/registar', async(req,res) => {
+app.post('/signup', async(req,res) => {
   const user = new User(req.body);
   
   user.save((err,userInfo) => {
@@ -30,24 +30,27 @@ app.post('/registar', async(req,res) => {
     return res.status(200).json({
       success:true
     })
-  })
+  })  
 })
 
-app.post('/login', async(req,res) => {
-  User.findOne({ email: req.body.email }, (err,user) => {
-    if(!user) {
-      return res.json({
-        loginSuccess: false,
-        message: "404"
-      })
-    }
+app.post('signin', async(req,res) => {
+  const user = User.findOne({ email: req.body.email });
+  if(!user) {
+    return res.json({
+      loginSuccess:false,
+      message: "404"
+    })
+  }
     
     user.comparePassword(req.body.password, (err,isMatch) => {
       if(!isMatch){
         return res.json({ loginSuccess:false, message: "401" })
       }
-    }) 
-  })
-})
+    })
+    
+    user.generateToken((err,user) => {
 
-app.listen(port, () => console.log('port 3000 run start'));   
+    })
+  })
+
+app.listen(port, () => console.log('port 3000 run start'));
