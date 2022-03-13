@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose');
 const { User } = require('./models/User');
 const dotenv = require('dotenv');
@@ -9,6 +10,7 @@ dotenv.config();
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
+app.use(cookieParser())
 
 mongoose.connect(process.env.mongoURL, {
     //useNewUrlParser: true,
@@ -34,7 +36,7 @@ app.post('/signup', async(req,res) => {
 })
 
 app.post('signin', async(req,res) => {
-  const user = User.findOne({ email: req.body.email });
+  const user = User.findOne({ email: req.body.email }); 
   if(!user) {
     return res.json({
       loginSuccess:false,
@@ -49,7 +51,11 @@ app.post('signin', async(req,res) => {
     })
     
     user.generateToken((err,user) => {
-
+      if(err) return res.status(400).send(err);
+      
+      res.cookie("x_auth", user.token)
+      .status(200)
+      .json({ loginSuccess: true, userId:user._id })
     })
   })
 
