@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose');
 const { User } = require('./models/User');
+const {auth} = require('./middleware/auth')
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -36,7 +37,7 @@ app.post('/signup', async(req,res) => {
 })
 
 app.post('signin', async(req,res) => {
-  const user = User.findOne({ email: req.body.email }); 
+  const user = await User.findOne({ email: req.body.email }); 
   if(!user) {
     return res.json({
       loginSuccess:false,
@@ -56,6 +57,15 @@ app.post('signin', async(req,res) => {
       res.cookie("x_auth", user.token)
       .status(200)
       .json({ loginSuccess: true, userId:user._id })
+    })
+  })
+
+  app.post('auth', auth ,async(req,res) => {
+    res.status(200).json({
+      _id: req.user._id,
+      isAdmin: req.user.role === 0 ? false : true,
+      email: req.user.email,
+      name: req.user.name,
     })
   })
 
