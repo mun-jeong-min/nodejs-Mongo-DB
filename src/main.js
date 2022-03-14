@@ -45,18 +45,18 @@ app.post('signin', async(req,res) => {
     })
   }
     
-    user.comparePassword(req.body.password, (err,isMatch) => {
+    await user.comparePassword(req.body.password, (err,isMatch) => {
       if(!isMatch){
         return res.json({ loginSuccess:false, message: "401" })
       }
     })
     
-    user.generateToken((err,user) => {
+    await user.generateToken((err,user) => {
       if(err) return res.status(400).send(err);
       
       res.cookie("x_auth", user.token)
-      .status(200)
-      .json({ loginSuccess: true, userId:user._id })
+        .status(200)
+        .json({ loginSuccess: true, userId: user._id })
     })
   })
 
@@ -69,4 +69,15 @@ app.post('signin', async(req,res) => {
     })
   })
 
+
+  app.get('/logout', auth, (req,res) => {
+    
+    await User.findOneAndUpdate({_id:req.user._id},
+    {token: ""}, (err, user) => {
+      if(err) return res.json({success:false, err});
+      return res.status(200).send({
+        success: true
+      })
+     })
+  })
 app.listen(port, () => console.log('port 3000 run start'));
